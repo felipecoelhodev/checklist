@@ -12,55 +12,79 @@ import { ToDoItem } from "./components/ToDoItem";
 import { ToDoList } from "./components/ToDoList";
 import { TodoForm } from "./components/TodoForm";
 
-const todos = [
-  {
-    id: 1,
-    description: "JSX e componentes",
-    completed: false,
-    createdAt: "2022-10-31",
-  },
-  {
-    id: 2,
-    description: "Props, state e hooks",
-    completed: false,
-    createdAt: "2022-10-31",
-  },
-  {
-    id: 3,
-    description: "Ciclo de vida dos componentes",
-    completed: false,
-    createdAt: "2022-10-31",
-  },
-  {
-    id: 4,
-    description: "Testes unitários com Jest",
-    completed: false,
-    createdAt: "2022-10-31",
-  },
-];
-const completed = [
-  {
-    id: 5,
-    description: "Controle de inputs e formulários controlados",
-    completed: true,
-    createdAt: "2022-10-31",
-  },
-  {
-    id: 6,
-    description: "Rotas dinâmicas",
-    completed: true,
-    createdAt: "2022-10-31",
-  },
-];
+// const todos = [
+//   {
+//     id: 1,
+//     description: "JSX e componentes",
+//     completed: false,
+//     createdAt: "2022-10-31"
+//   },
+//   {
+//     id: 2,
+//     description: "Props, state e hooks",
+//     completed: false,
+//     createdAt: "2022-10-31"
+//   },
+//   {
+//     id: 3,
+//     description: "Ciclo de vida dos componentes",
+//     completed: false,
+//     createdAt: "2022-10-31"
+//   },
+//   {
+//     id: 4,
+//     description: "Testes unitários com Jest",
+//     completed: false,
+//     createdAt: "2022-10-31"
+//   }
+// ]
+// const completed = [
+//   {
+//     id: 5,
+//     description: "Controle de inputs e formulários controlados",
+//     completed: true,
+//     createdAt: "2022-10-31"
+//   },
+//   {
+//     id: 6,
+//     description: "Rotas dinâmicas",
+//     completed: true,
+//     createdAt: "2022-10-31"
+//   }
+// ]
 
 function App() {
   const [showDialog, setShowDialog] = useState(false);
+  const [, setTodos] = useState([
+    {
+      id: 1,
+      description: "JSX e componentes",
+      completed: false,
+      createdAt: "2022-10-31",
+    },
+    {
+      id: 2,
+      description: "Controle de inputs e formulários controlados",
+      completed: true,
+      createdAt: "2022-10-31",
+    },
+  ]);
 
   const toggleDialog = () => {
     setShowDialog(!showDialog);
   };
 
-  const addTodo = () => {
+  const addTodo = (formData) => {
+    const description = formData.get("description");
+    setTodos((prevState) => {
+      const todo = {
+        id: prevState.length + 1,
+        description,
+        completed: false,
+        createdAt: new Date().toISOString(),
+      };
+      return [...prevState, todo];
+    });
     toggleDialog();
   };
 
@@ -73,18 +97,42 @@ function App() {
           </Heading>
         </Header>
         <ChecklistsWrapper>
-          <SubHeading>Para estudar</SubHeading>
+          {/* <TodoGroup
+            heading="Para estudar"
+            items={todos.filter(t => !t.completed)}
+            onToggleCompleted={toggleTodoCompleted}
+            onDeleteTodo={deleteTodo}
+          />
+
+          <TodoGroup
+            heading="Concluído"
+            items={todos.filter(t => t.completed)}
+            onToggleCompleted={toggleTodoCompleted}
+            onDeleteTodo={deleteTodo}
+          /> */}
+
+          {/* <SubHeading>Para estudar</SubHeading>
           <ToDoList>
-            {todos.map(function (t) {
-              return <ToDoItem key={t.id} item={t} />;
+            {todos.filter(t => !t.completed).map(function (t) {
+              return <ToDoItem
+                key={t.id}
+                item={t}
+                onToggleCompleted={toggleTodoCompleted}
+                onDeleteTodo={deleteTodo}
+              />
             })}
           </ToDoList>
           <SubHeading>Concluído</SubHeading>
           <ToDoList>
-            {completed.map(function (t) {
-              return <ToDoItem key={t.id} item={t} />;
+            {todos.filter(t => t.completed).map(function (t) {
+              return <ToDoItem
+                key={t.id}
+                item={t}
+                onToggleCompleted={toggleTodoCompleted}
+                onDeleteTodo={deleteTodo}
+              />
             })}
-          </ToDoList>
+          </ToDoList> */}
           <Footer>
             <Dialog isOpen={showDialog} onClose={toggleDialog}>
               <TodoForm onSubmit={addTodo} />
